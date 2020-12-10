@@ -1,0 +1,18 @@
+{
+    "server": {
+        "port": 9000
+    },
+    "db": {
+        "username": "",
+        "password": "",
+        "host": "",
+        "dbname": "students"
+    },
+    "weather": {
+        "api_key": "key..."
+    },
+    "email": {
+        "api_key": "key",
+        "secret": "test..."
+    }
+}

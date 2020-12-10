@@ -1,3 +1,4 @@
+const cfg = require('./pkg/config');
 require('./pkg/db');
 
 const express = require('express');
@@ -23,9 +24,9 @@ api.put('/books/:id', books.update);
 api.patch('/books/:id', books.updatePartial);
 api.delete('/books/:id', books.remove);
 
-api.listen(9000, err => {
+api.listen(cfg.get('server').port, err => {
     if(err) {
         return console.error(err);
     }
-    console.log('Server successfully started on port 9000');
+    console.log(`Server successfully started on port ${cfg.get('server').port}`);
 });

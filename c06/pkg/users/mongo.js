@@ -10,58 +10,34 @@ const User = mongoose.model(
 );
 
 const getAll = async () => {
-    try {
-        let data = await User.find({});
-        return data;
-    } catch(err) {
-        console.log(err);
-    }
+    let data = await User.find({});
+    return data;
 };
 
 const getOne = async (id) => {
-    try {
-        let data = await User.findOne({_id: id});
-        return data;
-    } catch (err) {
-        console.log(err);
-    }
+    let data = await User.findOne({_id: id});
+    return data;
 };
 
 const save = async (userData) => {
-    try {
-        let u = new User(userData);
-        let data = await u.save();
-        return data;
-    } catch(err) {
-        console.log(err);
-    }
+    let u = new User(userData);
+    let data = await u.save();
+    return data;
 };
 
 const update = async (id, userData) => {
-    try {
-        let data = await User.updateOne({_id: id}, userData);
-        return data.nModified !== 0;
-    } catch(err) {
-        console.log(err);
-    }
+    let data = await User.updateOne({_id: id}, userData);
+    return data.nModified !== 0;
 };
 
 const updatePartial = async (id, userData) => {
-    try {
-        let data = await User.updateOne({ _id: id }, userData);
-        return data.nModified !== 0;
-    } catch (err) {
-        console.log(err);
-    }
+    let data = await User.updateOne({ _id: id }, userData);
+    return data.nModified !== 0;
 };
 
 const remove = async (id) => {
-    try {
-        let data = await User.deleteOne({ _id: id });
-        return data.deletedCount !== 0;
-    } catch (err) {
-        console.log(err);
-    }
+    let data = await User.deleteOne({ _id: id });
+    return data.deletedCount !== 0;
 };
 
 module.exports = {
