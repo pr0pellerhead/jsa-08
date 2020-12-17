@@ -1,6 +1,8 @@
 const usersModel = require('../pkg/users');
 const usersValidator = require('../pkg/users/validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const cfg = require('../pkg/config');
 
 const create = async (req, res) => {
     // validate user data
@@ -52,7 +54,17 @@ const login = async (req, res) => {
             return res.status(403).send('Forbidden');
         }
         if(bcrypt.compareSync(req.body.password, ru.password)) {
-            return res.status(200).send('OK');
+            let payload = {
+                uid: ru._id,
+                role: ru.role,
+                email: ru.email,
+                first_name: ru.first_name,
+                last_name: ru.last_name,
+                exp: (new Date().getTime() + (365 * 24 * 60 * 60 * 1000)) / 1000
+            };
+            let key = cfg.get('server').jwt_key;
+            let token = jwt.sign(payload, key);
+            return res.status(200).send({jwt: token});
         }
         return res.status(401).send('Unauthorized');
     } catch (err) {
@@ -62,6 +74,9 @@ const login = async (req, res) => {
 };
 
 const refreshToken = async (req, res) => {
+
+    console.log(req.user);
+
     res.status(200).send('ok');
 };
 
