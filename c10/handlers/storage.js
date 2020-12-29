@@ -3,6 +3,9 @@ const strings = require('../pkg/strings');
 
 const storeFile = async (req, res) => {
     console.log(req.files);
+    console.log(req.body);
+
+    let public = req.body.public && req.body.public === 'true' ? true : false;
 
     const allowedTypes = [
         'image/jpeg',
@@ -21,8 +24,10 @@ const storeFile = async (req, res) => {
         return res.status(400).send('Bad Request: File Too Large');
     }
 
+    let dir = public ? 'public' : req.user.uid;
+
     // check if user directory exists, if not create
-    let userDir = `${__dirname}/../uploads/${req.user.uid}`;
+    let userDir = `${__dirname}/../uploads/${dir}`;
     if(!fs.existsSync(userDir)) {
         fs.mkdirSync(userDir);
     }
@@ -54,7 +59,20 @@ const getFile = (req, res) => {
     res.download(filePath);
 };
 
+const getPublicFile = (req, res) => {
+    let userDir = `${__dirname}/../uploads/public`;
+    let fileName = req.params.fid;
+    let filePath = `${userDir}/${fileName}`;
+
+    if (!fs.existsSync(filePath)) {
+        return res.status(404).send('File Not Found');
+    }
+
+    res.download(filePath);
+};
+
 module.exports = {
     storeFile,
-    getFile
+    getFile,
+    getPublicFile
 };

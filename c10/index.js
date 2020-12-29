@@ -13,6 +13,10 @@ api.use(bodyParser.json());
 api.use(jwt({
     secret: cfg.get('server').jwt_key,
     algorithms: ['HS256']
+}).unless({
+    path: [
+        { url: /\/api\/v1\/storage\/public\/.*/, methods: ['GET'] }
+    ]
 }));
 api.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
@@ -25,6 +29,7 @@ api.use(upload({
 
 api.post('/api/v1/storage', storage.storeFile);
 api.get('/api/v1/storage/:fid', storage.getFile);
+api.get('/api/v1/storage/public/:fid', storage.getPublicFile);
 
 api.listen(cfg.get('server').port, err => {
     if(err) {
