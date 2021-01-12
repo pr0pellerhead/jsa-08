@@ -1,0 +1,23 @@
+{
+    "server": {
+        "port": 9001,
+        "jwt_key": "TaJn4"
+    },
+    "db": {
+        "username": "",
+        "password": "",
+        "host": "",
+        "dbname": "students"
+    },
+    "weather": {
+        "api_key": "key..."
+    },
+    "mailer": {
+        "key": "",
+        "domain": ""
+    },
+    "email": {
+        "api_key": "key",
+        "secret": "test..."
+    }
+}
